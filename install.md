@@ -6,7 +6,7 @@ Alas, this seems to change every year. Damn you Steve Jobs!
 
 ### Get BREW
 
-If you have `brew`, execute `brew update`. Then, pick up the install instructions at installing `qemu`.
+If you have `brew`, execute `brew update`. Then, pick up the install instructions at `Install QEMU and yet another GCC`.
 
 ```text
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -14,7 +14,7 @@ If you have `brew`, execute `brew update`. Then, pick up the install instruction
 
 You will need to enter your Mac password.
 
-This install can take a long time and make your fan spin real hard! The `xcode` `command line tools` may be installed.
+This install can take a long time and make your fan spin! The `xcode` `command line tools` may be installed.
 
 ### Install QEMU and yet another GCC
 
@@ -24,9 +24,9 @@ After `brew` is installed, you'll be able to get `qemu` and yet another C compil
 brew install qemu x86_64-elf-gcc
 ```
 
-Note the `elf` - we will be talking about `elf` shortly.
+Note the `elf` - we will be talking about `elf` shortly as part of the OS class.
 
-This will also take a long time.
+This install will also take a long time.
 
 ### Launching xv6
 
@@ -55,6 +55,8 @@ make qemu-nox
 ^ax
 ```
 
+This is CTRL-A then x.
+
 ### If you already have QEMU
 
 Check for an upgrade:
@@ -71,9 +73,9 @@ Don't.
 
 ## Installing QEMU on WSL
 
-1. Install WSL - I prefer you use Ubuntu 18.04 LTS.
+1. Install WSL - use Ubuntu 18.04 LTS or Ubuntu 20.04 LTS.
 
-This means you may have to enable the Windows Subsystem for Linux in the old Add Remove Programs -> Windows Features settings.
+You likely have to enable the Windows Subsystem for Linux in the old Add Remove Programs -> Windows Features settings.
 
 ### Enable WSL
 
@@ -91,18 +93,17 @@ There is a tiny chance your computer BIOS will need a tickle to enable Virtualiz
 
 ### Install Ubuntu on Windows
 
-WSL is (for now) a command-line only honest-to-goodness Linux system with some small limitations (dealing with file systems). Any distro will do but I strongly suggest Ubuntu 18.04 LTS.
+WSL is (for now) a command-line only honest-to-goodness Linux system with some small limitations (dealing with file systems). 
 
 1. Press the windows key &#8862;
 2. Microsoft Store
 3. Search `Ubuntu`
-4. Choose the right one: `Ubuntu 18.04 LTS`
+4. Choose one of: `Ubuntu 18.04 LTS` or `Ubuntu 20.04 LTS`
 5. Download it. It is about 221 MB.
 6. Install it.
 7. "Launch"
 8. Wait.
 9. Make a trivial user name and password. Don't make this complicated - something easy. I used user name `a` with password `a`. Entering a password on the command line does not echo. This is normal.
-
 
 ### Install QEMU
 
@@ -111,13 +112,85 @@ WSL is (for now) a command-line only honest-to-goodness Linux system with some s
 3. `apt update` If this is your first time, there may be hundreds of packages to update. Don't. Rather do it at home. See below.
 4. `apt install qemu-system`
 5. Enter
-6. Wait
+6. Wait - there is almost a gigabyte of stuff to move around.
 7. `exit` This will leave the super user shell.
 
-At home, update the full system.
+At home, update the full system. Doing a complete Ubuntu update takes a lot of time.
 
 1. `sudo -i`
 2. `apt update`
 3. `apt upgrade`
 4. `exit`
 
+### Navigating to the WSL file system
+
+WSL maintains its own file system structure. Accessing the Windows file system is very easy. Your Windows file system is located below `/mnt/c` as shown here:
+
+```text
+$ df -h
+Filesystem      Size  Used Avail Use% Mounted on
+rootfs          256G   31G  226G  12% /
+none            256G   31G  226G  12% /dev
+none            256G   31G  226G  12% /run
+none            256G   31G  226G  12% /run/lock
+none            256G   31G  226G  12% /run/shm
+none            256G   31G  226G  12% /run/user
+tmpfs           256G   31G  226G  12% /sys/fs/cgroup
+C:\             256G   31G  226G  12% /mnt/c
+```
+
+Your Windows home directory would be something like: `/mnt/c/Users/YOURNAME`.
+
+### Building and launching `xv6`
+
+Get a fresh copy of the `xv6` distro.
+
+```text
+$ wget https://www.mediafire.com/file/agf1im2b2khfbty/xv6.zip
+```
+
+You will need `unzip`. Get it by:
+
+```text
+sudo apt install unzip
+```
+
+When unzipping `xv6.zip` the resulting files **will appear in the current directory**. This probably is NOT what you want. Make a project directory, change (`cd`) to it THEN unzip. For example:
+
+```text
+$ mkdir p99
+$ cd p99
+$ unzip ../xv6.zip
+```
+
+You will need `make`. Get it by:
+
+```text
+sudo apt install make
+```
+
+You will need `gcc`. Get it by:
+
+```text
+sudo apt install gcc
+```
+
+Also, get `gdb`.
+
+```text
+sudo apt install gdb
+```
+
+Now you can build and start `QEMU`.
+
+```text
+make qemu-nox
+```
+
+### Exiting QEMU
+
+```text
+^ax
+```
+
+This is CTRL-A then x.
