@@ -32,6 +32,14 @@ This install will also take a long time.
 
 After downloading a fresh `xv6` zip file, decompress it into folder per `xv6` project.
 
+If you want to download the `xv6` zip file from the command line, you will need to install `wget` via `brew`. Damn you Steve Jobs!
+
+```text
+$ wget https://www.mediafire.com/file/agf1im2b2khfbty/xv6.zip
+```
+
+If you want to download the zip file from a browser, just copy the URI above into your browser.
+
 In the `Makefile` search for `usertest` and delete the line it is on. Damn you Steve Jobs!
 
 Then, when you want to start working on your `xv6` code, you'll need to do this:
